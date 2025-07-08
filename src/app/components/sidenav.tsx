@@ -1,9 +1,10 @@
 'use client';
+
 import { useEffect, useState } from 'react';
 import perfume from '@/assets/perfume.png';
 import Image from 'next/image';
+import Link from 'next/link';
 import { motion, AnimatePresence } from "framer-motion";
-
 
 type Category = {
     slug: string;
@@ -11,26 +12,29 @@ type Category = {
     url: string;
 };
 
-interface sidenavProps {
-    screenWidth: (value: number) => void,
-    toggleSidebar: (value: boolean) => void
+interface SidenavProps {
+    screenWidth: (value: number) => void;
+    toggleSidebar: (value: boolean) => void;
 }
 
-export default function Sidenav({ screenWidth, toggleSidebar }: sidenavProps) {
+export default function Sidenav({ screenWidth, toggleSidebar }: SidenavProps) {
     const [categories, setCategories] = useState<Category[]>([]);
     const [isCollapsed, setIsCollapsed] = useState(false);
     const [sideNavScreenWidth, setSideNavScreenWidth] = useState(0);
 
     useEffect(() => {
         async function fetchCategories() {
-            const res = await fetch('https://dummyjson.com/products/categories');
+            const categoriesUrl = process.env.NEXT_PUBLIC_CATEGORIES_URL;
+            if (!categoriesUrl) {
+                throw new Error('NEXT_PUBLIC_CATEGORIES_URL is not defined');
+            }
+            const res = await fetch(categoriesUrl);
             if (!res.ok) throw new Error('Failed to fetch categories');
             const data: Category[] = await res.json();
             setCategories(data);
         }
         fetchCategories();
     }, []);
-
 
     useEffect(() => {
         const handleResize = () => {
@@ -43,24 +47,23 @@ export default function Sidenav({ screenWidth, toggleSidebar }: sidenavProps) {
         return () => {
             window.removeEventListener('resize', handleResize);
         };
-    }, []); // ✅ Add empty dependency array
+    }, []);
 
     const handletoggleSidebar = () => {
-        setIsCollapsed(!isCollapsed);
-        toggleSidebar(!isCollapsed);
-    }
+        const newState = !isCollapsed;
+        setIsCollapsed(newState);
+        toggleSidebar(newState);
+    };
 
     return (
-        <div className={`${!isCollapsed ? "w-20" : "w-full sm:w-60"} bg-orange-200 transition-all duration-500 ease-in-out fixed z-10 top-0 left-0 h-screen shadow-right`}>
-
+        <div className={`${!isCollapsed ? "w-20" : "w-full sm:w-60"} bg-blue-500 transition-all duration-500 ease-in-out fixed z-10 top-0 left-0 h-screen shadow-right`}>
             <div className="flex items-center pt-4 px-4 w-full">
                 <button
                     className="bg-white text-center min-w-[50px] h-10 rounded-sm text-xs font-bold cursor-pointer text-gray-600"
-                    onClick={() => handletoggleSidebar()}
+                    onClick={handletoggleSidebar}
                 >
                     A-Bay
                 </button>
-
 
                 <AnimatePresence mode="wait">
                     {isCollapsed && (
@@ -76,23 +79,21 @@ export default function Sidenav({ screenWidth, toggleSidebar }: sidenavProps) {
                     )}
                 </AnimatePresence>
 
-
                 {isCollapsed && (
                     <button
                         className="ml-auto w-10 h-10 rounded-md bg-transparent cursor-pointer text-white"
-                        onClick={() => handletoggleSidebar()}
+                        onClick={handletoggleSidebar}
                     >
                         X
                     </button>
                 )}
             </div>
 
-
             <ul className="categories list-none p-4 flex flex-col items-center h-full sidenav-height">
                 {categories.map((category) => (
                     <li key={category.slug} className="w-full mb-4">
-                        <a
-                            href={category.url}
+                        <Link
+                            href={`/products/${category.slug}`}
                             className="flex items-center h-10 text-gray-100 no-underline transition-all duration-300 ease-in-out rounded-md hover:bg-white hover:text-gray-800 cursor-pointer"
                         >
                             <Image
@@ -103,28 +104,24 @@ export default function Sidenav({ screenWidth, toggleSidebar }: sidenavProps) {
                                 alt={category.name}
                             />
 
-                            {/* Wrap just this animated span in AnimatePresence */}
                             <AnimatePresence mode="wait">
                                 {isCollapsed && (
                                     <motion.span
                                         key={category.slug}
-                                        className="ml-2 whitespace-nowrap inline-block text-gray-800"
-                                        initial={{ opacity: 0, x: -20, transition: { duration: 0.3, ease: "easeInOut", delay: 0.2 } }}
+                                        className="ml-2 whitespace-nowrap inline-block"
+                                        initial={{ opacity: 0, x: -20, transition: { duration: 0.3, ease: "easeInOut" , delay: 0.2 } }}
                                         animate={{ opacity: 1, x: 0 }}
-                                        exit={{ opacity: 0, x: -20, transition: { duration: 0.2, ease: "easeInOut" }}}
+                                        exit={{ opacity: 0, x: -20, transition: { duration: 0.3, ease: "easeInOut" } }}
                                         transition={{ duration: 0.3, ease: "easeInOut", delay: 0.2 }}
                                     >
                                         {category.name}
                                     </motion.span>
                                 )}
                             </AnimatePresence>
-                        </a>
+                        </Link>
                     </li>
                 ))}
-
             </ul>
-
-
         </div>
     );
 }
