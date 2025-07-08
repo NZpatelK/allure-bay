@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import Sidenav from "../../components/sidenav"
 import { useParams } from 'next/navigation';
+import ProductCard from "@/app/components/ProductCard";
 
 
 
@@ -34,15 +35,30 @@ export default function Products() {
         }
         fetchCategories();
     })
+
+    const mainClassName = isSidebarOpen && screenWidth > 768
+        ? "body-trimmed"
+        : "body-md-screen";
+
     return (
-        <div>
-            <Sidenav screenWidth={(e) => setScreenWidth(e)} toggleSidebar={(e) => setSidebarOpen(e)} />
-                {/* <h1>{searchParams.categories}</h1> */}
-            {product.map((item: any) => (
-                <div key={item.id}>
-                    <h1>{item.title}</h1>
+        <main className="flex pt-10 bg-gray-100 h-screen">
+            <Sidenav
+                screenWidth={(e) => setScreenWidth(e)}
+                toggleSidebar={(e) => setSidebarOpen(e)}
+            />
+            <main className={`${mainClassName} transition-all duration-500 ease-in-out`}>
+                <h1 className="text-4xl font-bold text-gray-800">{params.category}</h1>
+                <div className="bg-gray-300 mr-6 mt-2 rounded-2xl products-height shadow-neutral-300 shadow-2xl  overflow-hidden">
+                    <div className="flex flex-wrap gap-2 m-5">
+                        {product.map((product) => (
+
+                            <ProductCard product={product} key={product.id} />
+
+                        ))}
+                    </div>
                 </div>
-            ))}
-        </div>
+
+            </main>
+        </main>
     );
 }

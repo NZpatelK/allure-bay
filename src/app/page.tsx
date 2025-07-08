@@ -25,7 +25,7 @@ export default function Home() {
     : "body-md-screen";
 
   return (
-    <div className="flex pt-10 bg-gray-100 h-screen">
+    <main className="flex pt-10 bg-gray-100 h-screen">
       <Sidenav
         screenWidth={(e) => setScreenWidth(e)}
         toggleSidebar={(e) => setSidebarOpen(e)}
@@ -33,6 +33,6 @@ export default function Home() {
       <main className={`${mainClassName} transition-all duration-500 ease-in-out`}>
         <h1 className="text-4xl font-bold text-gray-800">Welcome to Allure Bay</h1>
       </main>
-    </div>
+    </main>
   );
 }
