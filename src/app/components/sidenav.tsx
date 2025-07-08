@@ -51,7 +51,7 @@ export default function Sidenav({ screenWidth, toggleSidebar }: sidenavProps) {
     }
 
     return (
-        <div className={`${!isCollapsed ? "w-20" : "w-full sm:w-60"} bg-[#263238] transition-all duration-500 ease-in-out fixed z-10 top-0 left-0 h-screen shadow-right`}>
+        <div className={`${!isCollapsed ? "w-20" : "w-full sm:w-60"} bg-orange-200 transition-all duration-500 ease-in-out fixed z-10 top-0 left-0 h-screen shadow-right`}>
 
             <div className="flex items-center pt-4 px-4 w-full">
                 <button
@@ -108,11 +108,11 @@ export default function Sidenav({ screenWidth, toggleSidebar }: sidenavProps) {
                                 {isCollapsed && (
                                     <motion.span
                                         key={category.slug}
-                                        className="ml-2 whitespace-nowrap inline-block"
-                                        initial={{ opacity: 0, x: -10 }}
+                                        className="ml-2 whitespace-nowrap inline-block text-gray-800"
+                                        initial={{ opacity: 0, x: -20, transition: { duration: 0.3, ease: "easeInOut", delay: 0.2 } }}
                                         animate={{ opacity: 1, x: 0 }}
-                                        exit={{ opacity: 0, x: -10 }}
-                                        transition={{ duration: 0.3, ease: "easeInOut" }}
+                                        exit={{ opacity: 0, x: -20, transition: { duration: 0.2, ease: "easeInOut" }}}
+                                        transition={{ duration: 0.3, ease: "easeInOut", delay: 0.2 }}
                                     >
                                         {category.name}
                                     </motion.span>
