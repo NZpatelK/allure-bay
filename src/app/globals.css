@@ -43,8 +43,9 @@ body {
   margin-left: 5rem;
 }
 
-.shadow-right{
-  box-shadow: 5px 0px 10px 0px rgba(0, 0, 0, 0.5);
+.shadow-right {
+  box-shadow: 12px 0 24px -4px rgba(0, 0, 0, 0.25), 
+              8px 0 12px -6px rgba(0, 0, 0, 0.15);
 }
 
 .sidenav-height{

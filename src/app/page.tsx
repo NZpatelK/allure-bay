@@ -25,21 +25,13 @@ export default function Home() {
     : "body-md-screen";
 
   return (
-    <div className={`grid grid-rows-[20px_1fr_20px] bg-white items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]`}>
+    <div className="flex pt-10 bg-gray-100 h-screen">
       <Sidenav
         screenWidth={(e) => setScreenWidth(e)}
         toggleSidebar={(e) => setSidebarOpen(e)}
       />
       <main className={`${mainClassName} transition-all duration-500 ease-in-out`}>
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <h1 className="text-4xl font-bold text-gray-600">Welcome to Allure Bay</h1>
+        <h1 className="text-4xl font-bold text-gray-800">Welcome to Allure Bay</h1>
       </main>
     </div>
   );

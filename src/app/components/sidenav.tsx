@@ -53,31 +53,53 @@ export default function Sidenav({ screenWidth, toggleSidebar }: sidenavProps) {
     return (
         <div className={`${!isCollapsed ? "w-20" : "w-full sm:w-60"} bg-[#263238] transition-all duration-500 ease-in-out fixed z-10 top-0 left-0 h-screen shadow-right`}>
 
-            <div className='flex item-center pt-4 px-4 w-full'>
+            <div className="flex items-center pt-4 px-4 w-full">
                 <button
-                    className="bg-white text-center min-w-[100px] rounded-[10px] p-2 text-md font-bold cursor-pointer text-gray-600"
+                    className="bg-white text-center min-w-[50px] h-10 rounded-sm text-xs font-bold cursor-pointer text-gray-600"
                     onClick={() => handletoggleSidebar()}
                 >
-                    A_Bay
+                    A-Bay
                 </button>
 
-                {isCollapsed && <div className="ml-2 text-md font-semibold text-white ">Allure Bay</div>}
-                {isCollapsed && <button className="ml-auto pointer w-20 h-20 rounded-half bg-transparent" onClick={() => handletoggleSidebar()}>X</button>}
+
+                <AnimatePresence mode="wait">
+                    {isCollapsed && (
+                        <motion.div
+                            className="ml-4 whitespace-nowrap inline-block text-md font-semibold text-white"
+                            initial={{ opacity: 0, x: -10 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            exit={{ opacity: 0, x: -10 }}
+                            transition={{ duration: 0.3, ease: "easeInOut" }}
+                        >
+                            Allure Bay
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+
+
+                {isCollapsed && (
+                    <button
+                        className="ml-auto w-10 h-10 rounded-md bg-transparent cursor-pointer text-white"
+                        onClick={() => handletoggleSidebar()}
+                    >
+                        X
+                    </button>
+                )}
             </div>
 
 
             <ul className="categories list-none p-4 flex flex-col items-center h-full sidenav-height">
                 {categories.map((category) => (
-                    <li key={category.slug} className="w-full mb-2">
+                    <li key={category.slug} className="w-full mb-4">
                         <a
                             href={category.url}
-                            className="flex items-center h-10 text-gray-100 no-underline transition-all duration-300 ease-in-out rounded-[10px] hover:bg-white hover:text-gray-800 cursor-pointer"
+                            className="flex items-center h-10 text-gray-100 no-underline transition-all duration-300 ease-in-out rounded-md hover:bg-white hover:text-gray-800 cursor-pointer"
                         >
                             <Image
-                                className="mx-2"
+                                className="px-2"
                                 src={perfume}
-                                width={20}
-                                height={20}
+                                width={40}
+                                height={40}
                                 alt={category.name}
                             />
 
