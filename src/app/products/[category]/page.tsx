@@ -53,7 +53,7 @@ export default function Products() {
                         {product.map((product, index) => (
                             <div
                                 key={product?.id ||index }
-                                className=" w-1/2 sm:w-1/3 md:w-1/3 lg:w-1/4 xl:w-1/6  2xl:w-1/8 p-1 box-borde transition-all duration-300 ease-in-outr"
+                                className=" w-1/2 sm:w-1/2 md:w-1/2 lg:w-1/3 xl:w-1/5  2xl:w-1/7 p-1 box-borde transition-all duration-300 ease-in-outr"
                             >
                                 <ProductCard product={product} />
                             </div>
