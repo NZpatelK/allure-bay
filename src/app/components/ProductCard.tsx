@@ -16,13 +16,14 @@ export default function ProductCard({ product }: { product: Product }) {
     const decrement = () => setQuantity(qty => (qty > 1 ? qty - 1 : 0));
 
     const calcateDiscount = (price: number, discountPercentage: number) => {
+        if (discountPercentage < 15) return price;
         const discount = (price * discountPercentage) / 100;
         return price - discount;
     };
 
     return (
         <div className=" relative rounded-lg shadow hover:shadow-md transition bg-white h-full flex flex-col justify-between w-full box-border">
-            <div className="ribbon text-sm">{product.discountPercentage.toFixed(0)}% off</div>
+             { product.discountPercentage >= 15 && <div className="ribbon text-sm">{product.discountPercentage.toFixed(0)}% off</div>}
             <div className="p-4">
                 <div className="relative w-full aspect-square rounded-xl overflow-hidden">
                     <Image
