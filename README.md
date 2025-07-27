@@ -33,8 +33,6 @@ The main goal of this project is to:
 
 [Watch the demo](https://www.linkedin.com/posts/karan-h-patel_nextjs-tailwindcss-framermotion-activity-7355358437146312704-Lj7d?utm_source=share&utm_medium=member_desktop&rcm=ACoAADBGF6QB0QMDySUwhCV0IdNp7xgY9h60CLQ)
 
-> Click the image above to watch the demo on YouTube.
-
 ## 💡 Why I Built This
 
 I created this to **understand how responsive layouts behave** when components like sidebars dynamically change size. It’s also a good way for me to improve my front-end development skills and try out different animation and layout techniques.
