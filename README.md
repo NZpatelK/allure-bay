@@ -1,36 +1,44 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Responsive Sidebar & Product Card Experiment
 
-## Getting Started
+This project is a **responsive website experiment** built to explore how a sidebar or navigation panel interacts with the main content area—especially how opening and closing the sidebar affects layout, spacing, and resizing of the product cards across different screen sizes.
 
-First, run the development server:
+## 🧪 Purpose
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+The main goal of this project is to:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Test **responsive layout behavior** when the sidebar opens and closes.
+- Observe how the **main content resizes** and adjusts spacing dynamically.
+- Ensure **product cards** fill the available space and adapt to screen edges.
+- Validate **device-friendliness** across various screen sizes and resolutions.
+- Serve as a **learning exercise** for future responsive UI projects.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+> ⚠️ Note: This is a personal experiment and part of my ongoing learning journey. It's not a production-ready app, and may include incomplete or experimental features.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🛠 Built With
 
-## Learn More
+- [Next.js](https://nextjs.org/) – React framework for building fast and modern web apps
+- [Tailwind CSS](https://tailwindcss.com/) – Utility-first CSS for responsive design
+- [Framer Motion](https://www.framer.com/motion/) – Smooth animations and transitions
+- [DummyJSON](https://dummyjson.com/) – Fake API data for testing
 
-To learn more about Next.js, take a look at the following resources:
+## 📸 Features
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Toggle sidebar navigation
+- Responsive product card grid layout
+- Smooth transitions using Framer Motion
+- Layout adapts on mobile, tablet, and desktop
+- Fetches product data from dummyjson.com
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🎥 Demo
 
-## Deploy on Vercel
+[![Watch the demo](https://img.youtube.com/vi/YOUR_VIDEO_ID_HERE/0.jpg)](https://www.youtube.com/watch?v=YOUR_VIDEO_ID_HERE)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+> Click the image above to watch the demo on YouTube.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 💡 Why I Built This
+
+I created this to **understand how responsive layouts behave** when components like sidebars dynamically change size. It’s also a good way for me to improve my front-end development skills and try out different animation and layout techniques.
+
+---
+
+Thanks for checking out this experiment! 🎉
