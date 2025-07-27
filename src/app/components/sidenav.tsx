@@ -67,44 +67,80 @@ export default function Sidenav({ screenWidth, toggleSidebar }: SidenavProps) {
         };
     }, []);
 
-    const handletoggleSidebar = () => {
+    const toggleMenu = () => {
         const newState = !isCollapsed;
         setIsCollapsed(newState);
         toggleSidebar(newState);
     };
 
-    return (
-        <div className={`${!isCollapsed ? "w-20" : "w-full sm:w-60"} bg-blue-500 transition-all duration-500 ease-in-out fixed z-10 top-0 left-0 h-screen shadow-right`}>
-            <div className="flex items-center pt-4 px-4 w-full">
-                <button
-                    className="bg-white text-center min-w-[50px] h-10 rounded-sm text-xs font-bold cursor-pointer text-gray-600"
-                    onClick={handletoggleSidebar}
-                >
-                    A-Bay
-                </button>
 
+    return (
+        <div className={`${!isCollapsed ? "w-0 md:w-20" : "w-full sm:w-60"} bg-blue-500 transition-all duration-500 ease-in-out fixed z-10 top-0 left-0 h-screen shadow-right`}>
+            <div className="relative flex items-center pt-4 px-4 w-full h-16">
+                {/* Sidebar Label */}
                 <AnimatePresence mode="wait">
                     {isCollapsed && (
                         <motion.div
-                            className="ml-4 whitespace-nowrap inline-block text-md font-semibold text-white"
+                            key="label"
+                            className="ml-4 text-lg whitespace-nowrap inline-block font-semibold text-white"
                             initial={{ opacity: 0, x: -10 }}
                             animate={{ opacity: 1, x: 0 }}
                             exit={{ opacity: 0, x: -10 }}
-                            transition={{ duration: 0.3, ease: "easeInOut" }}
+                            transition={{ duration: 0.3, ease: 'easeInOut' }}
                         >
                             Allure Bay
                         </motion.div>
                     )}
                 </AnimatePresence>
 
-                {isCollapsed && (
+                {/* Button wrapper for movement */}
+                <motion.div
+                    key="toggle-wrapper"
+                    className="absolute top-4"
+                    initial={false}
+                    animate={{
+                        left: (sideNavScreenWidth > 768) ? isCollapsed ?  "70%" : "20%" : isCollapsed ? "85%" : "50%", 
+                    }}
+                    transition={{ type: 'spring', stiffness: 500, damping: 80 }}
+                >
+                    {/* Menu/Cancel Button */}
                     <button
-                        className="ml-auto w-10 h-10 rounded-md bg-transparent cursor-pointer text-white"
-                        onClick={handletoggleSidebar}
+                        onClick={toggleMenu}
+                        className="w-10 h-10 flex items-center justify-center bg-white rounded-md shadow-md"
+                        aria-label="Toggle menu"
                     >
-                        X
+                        {/* Top bar */}
+                        <motion.span
+                            animate={isCollapsed ? 'open' : 'closed'}
+                            variants={{
+                                closed: { rotate: 0, y: -6 },
+                                open: { rotate: 45, y: 0 },
+                            }}
+                            transition={{ duration: 0.3 }}
+                            className="absolute w-6 h-0.5 bg-black"
+                        />
+                        {/* Middle bar */}
+                        <motion.span
+                            animate={isCollapsed ? 'open' : 'closed'}
+                            variants={{
+                                closed: { opacity: 1 },
+                                open: { opacity: 0 },
+                            }}
+                            transition={{ duration: 0.3 }}
+                            className="absolute w-6 h-0.5 bg-black"
+                        />
+                        {/* Bottom bar */}
+                        <motion.span
+                            animate={isCollapsed ? 'open' : 'closed'}
+                            variants={{
+                                closed: { rotate: 0, y: 6 },
+                                open: { rotate: -45, y: 0 },
+                            }}
+                            transition={{ duration: 0.3 }}
+                            className="absolute w-6 h-0.5 bg-black"
+                        />
                     </button>
-                )}
+                </motion.div>
             </div>
 
             <ul className="categories list-none p-4 flex flex-col items-center h-full sidenav-height">
@@ -127,7 +163,7 @@ export default function Sidenav({ screenWidth, toggleSidebar }: SidenavProps) {
                                     <motion.span
                                         key={category.slug}
                                         className="ml-2 whitespace-nowrap inline-block"
-                                        initial={{ opacity: 0, x: -20, transition: { duration: 0.3, ease: "easeInOut" , delay: 0.2 } }}
+                                        initial={{ opacity: 0, x: -20, transition: { duration: 0.3, ease: "easeInOut", delay: 0.2 } }}
                                         animate={{ opacity: 1, x: 0 }}
                                         exit={{ opacity: 0, x: -20, transition: { duration: 0.3, ease: "easeInOut" } }}
                                         transition={{ duration: 0.3, ease: "easeInOut", delay: 0.2 }}
