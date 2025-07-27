@@ -1,10 +1,17 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import perfume from '@/assets/perfume.png';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, AnimatePresence } from "framer-motion";
+
+import perfume from '@/assets/fragrances.png';
+import beauty from '@/assets/beauty.png';
+import furniture from '@/assets/furniture.png';
+import grocery from '@/assets/grocery.png';
+import homeDecor from '@/assets/home-decoration.png';
+import kitchenAccessories from '@/assets/kitchen-accessories.png';
+import laptop from '@/assets/laptop.png';
 
 type Category = {
     slug: string;
@@ -22,6 +29,16 @@ export default function Sidenav({ screenWidth, toggleSidebar }: SidenavProps) {
     const [isCollapsed, setIsCollapsed] = useState(false);
     const [sideNavScreenWidth, setSideNavScreenWidth] = useState(0);
 
+    const icons = [
+        perfume,
+        beauty,
+        furniture,
+        grocery,
+        homeDecor,
+        kitchenAccessories,
+        laptop
+    ];
+
     useEffect(() => {
         async function fetchCategories() {
             const categoriesUrl = process.env.NEXT_PUBLIC_CATEGORIES_URL;
@@ -31,7 +48,8 @@ export default function Sidenav({ screenWidth, toggleSidebar }: SidenavProps) {
             const res = await fetch(categoriesUrl);
             if (!res.ok) throw new Error('Failed to fetch categories');
             const data: Category[] = await res.json();
-            setCategories(data);
+            const reduceData = data.slice(0, 7);
+            setCategories(reduceData);
         }
         fetchCategories();
     }, []);
@@ -90,7 +108,7 @@ export default function Sidenav({ screenWidth, toggleSidebar }: SidenavProps) {
             </div>
 
             <ul className="categories list-none p-4 flex flex-col items-center h-full sidenav-height">
-                {categories.map((category) => (
+                {categories.map((category, index) => (
                     <li key={category.slug} className="w-full mb-4">
                         <Link
                             href={`/products/${category.slug}`}
@@ -98,7 +116,7 @@ export default function Sidenav({ screenWidth, toggleSidebar }: SidenavProps) {
                         >
                             <Image
                                 className="px-2"
-                                src={perfume}
+                                src={icons[index % icons.length]}
                                 width={40}
                                 height={40}
                                 alt={category.name}
