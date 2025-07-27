@@ -33,34 +33,34 @@ body {
   position: relative;
 }
 
-@media (min-width: 640px) {
+@media (min-width: 768px) {
   body {
     margin-left: 5rem;
     width: calc(100% - 5rem);
+
+    .body-trimmed {
+      width: calc(100% - 15rem);
+      margin-left: 15rem;
+    }
+
+    .body-md-screen {
+      width: calc(100% - 2rem);
+      margin-left: 2rem;
+    }
   }
 }
 
 
-.body-trimmed {
-  width: calc(100% - 15rem);
-  margin-left: 15rem;
-}
-
-.body-md-screen {
-  width: calc(100% - 5rem);
-  margin-left: 5rem;
-}
-
 .shadow-right {
-  box-shadow: 12px 0 24px -4px rgba(59, 130, 246, 0.6), 
-              8px 0 12px -6px rgba(59, 130, 246, 0.4);
+  box-shadow: 12px 0 24px -4px rgba(244, 64, 64, 0.6),
+    8px 0 12px -6px rgba(246, 59, 59, 0.4);
 }
 
-.sidenav-height{
+.sidenav-height {
   height: calc(100% - 3.65rem);
 }
 
-.products-height{
+.products-height {
   height: calc(100% - 5rem);
 }
 
@@ -70,20 +70,23 @@ body {
   font-weight: bold;
   color: #fff;
 }
+
 .ribbon {
-  --f: .5em; /* control the folded part*/
-  --r: .8em; /* control the ribbon shape */
-  
+  --f: .5em;
+  /* control the folded part*/
+  --r: .8em;
+  /* control the ribbon shape */
+
   position: absolute;
   top: 20px;
   right: calc(-1*var(--f));
   padding-inline: 1em;
   line-height: 1.8;
-  background: #055ef7;
+  background: #c00202;
   border-bottom: var(--f) solid #0005;
   border-left: var(--r) solid #0000;
-  clip-path: 
-    polygon(var(--r) 0,100% 0,100% calc(100% - var(--f)),calc(100% - var(--f)) 100%,
-      calc(100% - var(--f)) calc(100% - var(--f)),var(--r) calc(100% - var(--f)),
+  clip-path:
+    polygon(var(--r) 0, 100% 0, 100% calc(100% - var(--f)), calc(100% - var(--f)) 100%,
+      calc(100% - var(--f)) calc(100% - var(--f)), var(--r) calc(100% - var(--f)),
       0 calc(50% - var(--f)/2));
 }

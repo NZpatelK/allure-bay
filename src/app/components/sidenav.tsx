@@ -4,7 +4,9 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, AnimatePresence } from "framer-motion";
+import { usePathname } from 'next/navigation'; // For persistent highlight
 
+// Image imports
 import perfume from '@/assets/fragrances.png';
 import beauty from '@/assets/beauty.png';
 import furniture from '@/assets/furniture.png';
@@ -28,6 +30,7 @@ export default function Sidenav({ screenWidth, toggleSidebar }: SidenavProps) {
     const [categories, setCategories] = useState<Category[]>([]);
     const [isCollapsed, setIsCollapsed] = useState(false);
     const [sideNavScreenWidth, setSideNavScreenWidth] = useState(0);
+    const pathname = usePathname();
 
     const icons = [
         perfume,
@@ -41,6 +44,8 @@ export default function Sidenav({ screenWidth, toggleSidebar }: SidenavProps) {
 
     useEffect(() => {
         async function fetchCategories() {
+            console.log(categories.length, 'categories length'); // Debugging log
+            if (categories.length > 0) return; // Avoid fetching if already loaded
             const categoriesUrl = process.env.NEXT_PUBLIC_CATEGORIES_URL;
             if (!categoriesUrl) {
                 throw new Error('NEXT_PUBLIC_CATEGORIES_URL is not defined');
@@ -52,7 +57,7 @@ export default function Sidenav({ screenWidth, toggleSidebar }: SidenavProps) {
             setCategories(reduceData);
         }
         fetchCategories();
-    }, []);
+    }, [categories]);
 
     useEffect(() => {
         const handleResize = () => {
@@ -73,9 +78,8 @@ export default function Sidenav({ screenWidth, toggleSidebar }: SidenavProps) {
         toggleSidebar(newState);
     };
 
-
     return (
-        <div className={`${!isCollapsed ? "w-0 md:w-20" : "w-full sm:w-60"} bg-blue-500 transition-all duration-500 ease-in-out fixed z-10 top-0 left-0 h-screen shadow-right`}>
+        <div className={`${!isCollapsed ? "w-0 md:w-20" : "w-full sm:w-60"} bg-[#e63946] transition-all duration-500 ease-in-out fixed z-10 top-0 left-0 h-screen shadow-right`}>
             <div className="relative flex items-center pt-4 px-4 w-full h-16">
                 {/* Sidebar Label */}
                 <AnimatePresence mode="wait">
@@ -99,17 +103,15 @@ export default function Sidenav({ screenWidth, toggleSidebar }: SidenavProps) {
                     className="absolute top-4"
                     initial={false}
                     animate={{
-                        left: (sideNavScreenWidth > 768) ? isCollapsed ?  "70%" : "20%" : isCollapsed ? "85%" : "50%", 
+                        left: (sideNavScreenWidth > 768) ? isCollapsed ? "70%" : "20%" : isCollapsed ? "85%" : "50%",
                     }}
                     transition={{ type: 'spring', stiffness: 500, damping: 80 }}
                 >
-                    {/* Menu/Cancel Button */}
                     <button
                         onClick={toggleMenu}
                         className="w-10 h-10 flex items-center justify-center bg-white rounded-md shadow-md"
                         aria-label="Toggle menu"
                     >
-                        {/* Top bar */}
                         <motion.span
                             animate={isCollapsed ? 'open' : 'closed'}
                             variants={{
@@ -119,7 +121,6 @@ export default function Sidenav({ screenWidth, toggleSidebar }: SidenavProps) {
                             transition={{ duration: 0.3 }}
                             className="absolute w-6 h-0.5 bg-black"
                         />
-                        {/* Middle bar */}
                         <motion.span
                             animate={isCollapsed ? 'open' : 'closed'}
                             variants={{
@@ -129,7 +130,6 @@ export default function Sidenav({ screenWidth, toggleSidebar }: SidenavProps) {
                             transition={{ duration: 0.3 }}
                             className="absolute w-6 h-0.5 bg-black"
                         />
-                        {/* Bottom bar */}
                         <motion.span
                             animate={isCollapsed ? 'open' : 'closed'}
                             variants={{
@@ -144,37 +144,43 @@ export default function Sidenav({ screenWidth, toggleSidebar }: SidenavProps) {
             </div>
 
             <ul className="categories list-none p-4 flex flex-col items-center h-full sidenav-height">
-                {categories.map((category, index) => (
-                    <li key={category.slug} className="w-full mb-4">
-                        <Link
-                            href={`/products/${category.slug}`}
-                            className="flex items-center h-10 text-gray-100 no-underline transition-all duration-300 ease-in-out rounded-md hover:bg-white hover:text-gray-800 cursor-pointer"
-                        >
-                            <Image
-                                className="px-2"
-                                src={icons[index % icons.length]}
-                                width={40}
-                                height={40}
-                                alt={category.name}
-                            />
-
-                            <AnimatePresence mode="wait">
-                                {isCollapsed && (
-                                    <motion.span
-                                        key={category.slug}
-                                        className="ml-2 whitespace-nowrap inline-block"
-                                        initial={{ opacity: 0, x: -20, transition: { duration: 0.3, ease: "easeInOut", delay: 0.2 } }}
-                                        animate={{ opacity: 1, x: 0 }}
-                                        exit={{ opacity: 0, x: -20, transition: { duration: 0.3, ease: "easeInOut" } }}
-                                        transition={{ duration: 0.3, ease: "easeInOut", delay: 0.2 }}
-                                    >
-                                        {category.name}
-                                    </motion.span>
-                                )}
-                            </AnimatePresence>
-                        </Link>
-                    </li>
-                ))}
+                {categories.map((category, index) => {
+                    const isActive = pathname.includes(category.slug);
+                    return (
+                        <li key={category.slug} className="w-full mb-4">
+                            <Link href={`/products/${category.slug}`} passHref>
+                                <div
+                                    className={`
+                                        flex items-center h-10 text-gray-100 transition-all duration-300 ease-in-out rounded-md cursor-pointer
+                                        ${isActive ? "bg-white text-gray-800 font-semibold" : "hover:bg-white hover:text-gray-800"}
+                                    `}
+                                >
+                                    <Image
+                                        className="pl-2 py-4"
+                                        src={icons[index % icons.length]}
+                                        width={40}
+                                        height={40}
+                                        alt={category.name}
+                                    />
+                                    <AnimatePresence mode="wait">
+                                        {isCollapsed && (
+                                            <motion.span
+                                                key={category.slug}
+                                                className="ml-2 whitespace-nowrap inline-block"
+                                                initial={{ opacity: 0, x: -20 }}
+                                                animate={{ opacity: 1, x: 0 }}
+                                                exit={{ opacity: 0, x: -20 }}
+                                                transition={{ duration: 0.3, ease: "easeInOut", delay: 0.2 }}
+                                            >
+                                                {category.name}
+                                            </motion.span>
+                                        )}
+                                    </AnimatePresence>
+                                </div>
+                            </Link>
+                        </li>
+                    );
+                })}
             </ul>
         </div>
     );

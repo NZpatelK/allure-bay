@@ -57,7 +57,7 @@ export default function ProductCard({ product }: { product: Product }) {
             </div>
             <div
                 ref={cardRef}
-                className="p-4 rounded-b-lg w-full mx-auto bg-neutral-700 hover:bg-neutral-600 transition-all"
+                className="p-4 rounded-b-lg w-full mx-auto bg-[#c00202] hover:bg-[#e71616] transition-all"
             >
                 <AnimatePresence mode="wait" initial={false}>
                     {quantity === 0 ? (
@@ -68,7 +68,7 @@ export default function ProductCard({ product }: { product: Product }) {
                             animate={{ opacity: 1, rotateX: 0, y: 0 }}
                             exit={{ opacity: 0, rotateX: 90, y: 50 }}
                             transition={{ type: 'spring', stiffness: 200, damping: 20 }}
-                            className="flex items-center gap-2 justify-center text-white text-lg w-full"
+                            className="flex items-center gap-2 mt-4 justify-center text-white text-lg w-full transition-all"
                         >
                             Add to Cart
                         </motion.button>
@@ -84,7 +84,7 @@ export default function ProductCard({ product }: { product: Product }) {
                             <div className="flex items-center justify-center gap-4 p-0 m-0">
                                 <button
                                     onClick={decrement}
-                                    className="bg-neutral-400 hover:bg-neutral-500 p-2 rounded-full transition"
+                                    className="bg-[#f80505] hover:bg-[#9c0202] p-2 rounded-full transition"
                                 >
                                     <FaMinus className="w-2 h-2" />
                                 </button>
@@ -98,7 +98,7 @@ export default function ProductCard({ product }: { product: Product }) {
                                 </motion.span>
                                 <button
                                     onClick={increment}
-                                    className="bg-neutral-400 hover:bg-neutral-500 p-2 rounded-full transition"
+                                    className="bg-[#f80505] hover:bg-[#9c0202] p-2 rounded-full transition"
                                 >
                                     <FaPlus className="w-2 h-2" />
                                 </button>
